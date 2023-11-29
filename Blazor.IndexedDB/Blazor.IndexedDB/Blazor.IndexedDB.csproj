@@ -35,6 +35,8 @@
 			- Changed namespace Blazor.IndexedDB.Framework to namespace IndexedDB.Blazor
 			- Changed private IndexedDBManager connector; to protected IndexedDBManager connector;
 			- Changed IndexedSet&lt;T&gt; : IEnumerable&lt;T&gt; to IndexedSet&lt;T&gt; : ICollection&lt;T&gt;
+			- Original code by [Jinjinov](https://github.com/Jinjinov)
+			- Original repository at [IndexedDB.Blazor](https://github.com/Jinjinov/IndexedDB.Blazor)
 			- 1.0.1:
 			- Original code by https://github.com/Reshiru
 			- Original repository at https://github.com/Reshiru/Blazor.IndexedDB.Framework
