@@ -3,8 +3,8 @@
 An easy way to interact with IndexedDB and make it feel like EF Core but `async`.
 
 ## Version history
-- 1.2.1:
-    - Upgraded from `.NET Core 3.2.1` to `.NET Core 8.0.0`
+- 2.0.1:
+    - Upgraded from `.NET Core 3.2.1` to `.NET Core 7.0.0`
     - Upgraded from `netstandard2.1` to `net8.0`
     - Changed namespace `IndexedDB.Blazor` to namespace `Blazor.IndexedDB`
     - Added `indexedDb.Blazor.js` to EmbeddedResource and removed `TG.Blazor.IndexedDB` from PackageReference

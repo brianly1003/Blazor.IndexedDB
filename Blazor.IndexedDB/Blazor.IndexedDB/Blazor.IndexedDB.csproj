@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
@@ -22,8 +22,8 @@
 		<PackageId>Blazor.IndexedDB</PackageId>
 		<PackageReleaseNotes>
 			- 2.0.1:
-			- Upgraded from .NET Core 3.2.1 to .NET Core 7.0.0
-			- Upgraded from netstandard2.1 to net7.0
+			- Upgraded from .NET Core 3.2.1 to .NET Core 8.0.0
+			- Upgraded from netstandard2.1 to net8.0
 			- Changed namespace IndexedDB.Blazor to namespace Blazor.IndexedDB
 			- Added indexedDb.Blazor.js to EmbeddedResource and removed TG.Blazor.IndexedDB from PackageReference
 			- Added IndexedDBManager.cs
@@ -45,8 +45,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.0" />
-	  <PackageReference Include="Microsoft.JSInterop" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.JSInterop" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
