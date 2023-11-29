@@ -4,11 +4,11 @@ An easy way to interact with IndexedDB and make it feel like EF Core but `async`
 
 ## Version history
 - 1.2.1:
-    - Upgraded from .NET Core 3.2.1 to .NET Core 8.0.0
-    - Upgraded from netstandard2.1 to net8.0
-    - Changed namespace IndexedDB.Blazor to namespace Blazor.IndexedDB
-    - Added blazor.indexedDb.js to EmbeddedResource and removed TG.Blazor.IndexedDB from PackageReference
-    - Added IndexedDBManager.cs
+    - Upgraded from `.NET Core 3.2.1` to `.NET Core 8.0.0`
+    - Upgraded from `netstandard2.1` to `net8.0`
+    - Changed namespace `IndexedDB.Blazor` to namespace `Blazor.IndexedDB`
+    - Added `indexedDb.Blazor.js` to EmbeddedResource and removed `TG.Blazor.IndexedDB` from PackageReference
+    - Added `IndexedDBManager.cs`
 - 1.1.1:
     - Upgraded from `.NET Core 3.0.0-preview` to `.NET Core 3.2.1`
     - Upgraded form `netstandard2.0` to `netstandard2.1`
@@ -41,9 +41,9 @@ Or include it in your project file:
 - Edit record
 
 ## How to use
-1. Add `Blazor.IndexedDB/blazor.indexedDb.js` to your `index.html`
+1. Add `Blazor.IndexedDB/indexedDb.Blazor.js` to your `index.html`
 ```html
-<script src="_content/Blazor.IndexedDB/blazor.indexedDb.js"></script>
+<script src="_content/Blazor.IndexedDB/indexedDb.Blazor.js"></script>
 ```
 2. Register `IndexedDbFactory` as a service.
 ```CSharp
