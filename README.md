@@ -32,7 +32,7 @@ PM> Install-Package Blazor.IndexedDB
 ```
 Or include it in your project file:
 
-    <PackageReference Include="Blazor.IndexedDB" Version="1.2.1" />
+    <PackageReference Include="Blazor.IndexedDB" Version="2.0.1" />
 
 ## Features
 - Connect and create database
