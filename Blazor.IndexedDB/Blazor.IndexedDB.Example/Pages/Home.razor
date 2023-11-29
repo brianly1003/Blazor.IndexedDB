@@ -1,0 +1,31 @@
+﻿@page "/"
+
+@using Blazor.IndexedDB.Example.Models
+
+@inject IIndexedDbFactory DbFactory
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<button @onclick="@(args => Create(args))">Click me</button>
+
+@code
+{
+    private async Task Create(MouseEventArgs e)
+    {
+        using var db = await this.DbFactory.Create<ExampleDb>();
+        for (var i = 0; i < 10; i++)
+        {
+            db.People.Add(new Person()
+            {
+                FirstName = Guid.NewGuid().ToString(),
+                LastName = Guid.NewGuid().ToString()
+            });
+        }
+
+        await db.SaveChanges();
+    }
+}

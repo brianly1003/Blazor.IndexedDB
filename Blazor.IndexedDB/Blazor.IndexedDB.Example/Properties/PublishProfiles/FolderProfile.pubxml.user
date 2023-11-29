@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\Projects\Blazor.IndexedDB\Blazor.IndexedDB\Blazor.IndexedDB.Example\bin\Release\net8.0\browser-wasm\publish\</_PublishTargetUrl>
+    <History>True|2023-11-29T09:31:08.4763250Z;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>
