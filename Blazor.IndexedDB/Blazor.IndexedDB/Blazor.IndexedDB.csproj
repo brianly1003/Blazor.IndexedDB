@@ -10,7 +10,7 @@
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<IsPackable>true</IsPackable>
-		<Version>2.0.1</Version>
+		<Version>2.0.2</Version>
 		<Authors>brianly1003</Authors>
 		<Description>A Blazor library for accessing IndexedDB</Description>
 		<RepositoryUrl>https://github.com/brianly1003/Blazor.IndexedDB.git</RepositoryUrl>
@@ -21,25 +21,8 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageId>Blazor.IndexedDB</PackageId>
 		<PackageReleaseNotes>
-			- 2.0.1:
-			- Upgraded from .NET Core 3.2.1 to .NET Core 7.0.0
-			- Upgraded from netstandard2.1 to net7.0
-			- Changed namespace IndexedDB.Blazor to namespace Blazor.IndexedDB
-			- Added indexedDb.Blazor.js to EmbeddedResource and removed TG.Blazor.IndexedDB from PackageReference
-			- Added IndexedDBManager.cs
-			- 1.1.1:
-			- Upgraded from .NET Core 3.0.0-preview to .NET Core 3.2.1
-			- Upgraded form netstandard2.0 to netstandard2.1
-			- Upgraded form C# 7.3 to C# 8.0
-			- Upgraded TG.Blazor.IndexedDB from 0.9.0-beta to 1.5.0-preview
-			- Changed namespace Blazor.IndexedDB.Framework to namespace IndexedDB.Blazor
-			- Changed private IndexedDBManager connector; to protected IndexedDBManager connector;
-			- Changed IndexedSet&lt;T&gt; : IEnumerable&lt;T&gt; to IndexedSet&lt;T&gt; : ICollection&lt;T&gt;
-			- Original code by [Jinjinov](https://github.com/Jinjinov)
-			- Original repository at [IndexedDB.Blazor](https://github.com/Jinjinov/IndexedDB.Blazor)
-			- 1.0.1:
-			- Original code by https://github.com/Reshiru
-			- Original repository at https://github.com/Reshiru/Blazor.IndexedDB.Framework
+			- 2.0.2:
+			- Impelement db.AddRange() function
 		</PackageReleaseNotes>
 		<PackageProjectUrl>https://github.com/brianly1003/Blazor.IndexedDB</PackageProjectUrl>
 	</PropertyGroup>
