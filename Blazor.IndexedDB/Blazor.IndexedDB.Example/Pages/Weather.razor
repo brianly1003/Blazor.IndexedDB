@@ -1,4 +1,7 @@
 ﻿@page "/weather"
+@using Blazor.IndexedDB.Example.Models
+
+@inject IIndexedDbFactory DbFactory
 @inject HttpClient Http
 
 <PageTitle>Weather</PageTitle>
@@ -7,7 +10,7 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (forecasts == null)
+@if (_forecasts == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -23,7 +26,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var forecast in _forecasts)
             {
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
@@ -37,21 +40,26 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private WeatherForecast[]? _forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-    }
+        using var db = await DbFactory.Create<ExampleDb>();
+        var localForecasts = db.WeatherForecasts.ToArray();
+        if (localForecasts.Length == 0)
+        {
+            var remoteForecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+            if (remoteForecasts != null)
+            {
+                db.WeatherForecasts.AddRange(remoteForecasts);
+                await db.SaveChanges();
+            }
 
-    public class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+            _forecasts = db.WeatherForecasts.ToArray();
+        }
+        else
+        {
+            _forecasts = localForecasts;
+        }
     }
 }

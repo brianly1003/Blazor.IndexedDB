@@ -7,5 +7,7 @@ namespace Blazor.IndexedDB.Example.Models
         public ExampleDb(IJSRuntime jSRuntime, string name, int version) : base(jSRuntime, name, version) { }
 
         public IndexedSet<Person> People { get; set; }
+
+        public IndexedSet<WeatherForecast> WeatherForecasts { get; set; }
     }
 }

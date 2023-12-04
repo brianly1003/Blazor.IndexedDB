@@ -58,6 +58,19 @@ namespace Blazor.IndexedDB
             }
         }
 
+        public void AddRange(IEnumerable<T> items)
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
+
+            foreach (var item in items)
+            {
+                Add(item);
+            }
+        }
+
         public void Clear()
         {
             foreach (var item in this)
