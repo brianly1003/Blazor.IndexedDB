@@ -9,17 +9,17 @@ namespace Blazor.IndexedDB
         /// <summary>
         /// The internal stored items
         /// </summary>
-        private readonly IList<IndexedEntity<T>> internalItems;
+        private readonly IList<IndexedEntity<T>> _internalItems;
         /// <summary>
         /// The type T primary key, only != null if at least once requested by remove
         /// </summary>
-        private PropertyInfo primaryKey;
+        private readonly PropertyInfo _primaryKey;
 
         // ToDo: Remove PK dependency
-        public IndexedSet(IEnumerable<T> records, PropertyInfo primaryKey)
+        public IndexedSet(IEnumerable<T>? records, PropertyInfo primaryKey)
         {
-            this.primaryKey = primaryKey;
-            this.internalItems = new List<IndexedEntity<T>>();
+            this._primaryKey = primaryKey;
+            this._internalItems = new List<IndexedEntity<T>>();
 
             if (records == null)
             {
@@ -35,7 +35,7 @@ namespace Blazor.IndexedDB
                     State = EntityState.Unchanged
                 };
 
-                this.internalItems.Add(indexedItem);
+                this._internalItems.Add(indexedItem);
             }
 
             Debug.WriteLine($"{nameof(IndexedEntity)} - Construct - Add records DONE");
@@ -43,15 +43,15 @@ namespace Blazor.IndexedDB
 
         public bool IsReadOnly => false;
 
-        public int Count => this.internalItems.Count();
+        public int Count => this._internalItems.Count();
 
         public void Add(T item)
         {
-            if (!this.internalItems.Select(x => x.Instance).Contains(item))
+            if (!this._internalItems.Select(x => x.Instance).Contains(item))
             {
                 Debug.WriteLine($"{nameof(IndexedEntity)} - Added item of type {typeof(T).Name}");
 
-                this.internalItems.Add(new IndexedEntity<T>(item)
+                this._internalItems.Add(new IndexedEntity<T>(item)
                 {
                     State = EntityState.Added
                 });
@@ -86,7 +86,7 @@ namespace Blazor.IndexedDB
 
         public bool Remove(T item)
         {
-            var internalItem = this.internalItems.FirstOrDefault(x => x.Instance.Equals(item));
+            var internalItem = this._internalItems.FirstOrDefault(x => x.Instance.Equals(item));
 
             if (internalItem != null)
             {
@@ -99,9 +99,9 @@ namespace Blazor.IndexedDB
             {
                 Debug.WriteLine("Searching for equality with PK");
 
-                var value = this.primaryKey.GetValue(item);
+                var value = this._primaryKey.GetValue(item);
 
-                internalItem = this.internalItems.FirstOrDefault(x => this.primaryKey.GetValue(x.Instance).Equals(value));
+                internalItem = this._internalItems.FirstOrDefault(x => this._primaryKey.GetValue(x.Instance).Equals(value));
 
                 if (internalItem != null)
                 {
@@ -117,9 +117,34 @@ namespace Blazor.IndexedDB
             return false;
         }
 
+        public void RemoveRange(IEnumerable<T> items)
+        {
+            var primaryKeysToRemove = new HashSet<object>(items.Select(item => this._primaryKey.GetValue(item)));
+
+            // Create a list to collect items that will be marked as deleted
+            var itemsToBeRemoved = new List<IndexedEntity<T>>();
+
+            foreach (var internalItem in this._internalItems)
+            {
+                var pk = this._primaryKey.GetValue(internalItem.Instance);
+                if (primaryKeysToRemove.Contains(pk ?? throw new InvalidOperationException()))
+                {
+                    Debug.WriteLine($"Marking item with id {pk} for removal");
+                    itemsToBeRemoved.Add(internalItem);
+                }
+            }
+
+            // Batch update the state of collected items
+            foreach (var itemToBeRemoved in itemsToBeRemoved)
+            {
+                itemToBeRemoved.State = EntityState.Deleted;
+            }
+        }
+
+
         public IEnumerator<T> GetEnumerator()
         {
-            return this.internalItems.Select(x => x.Instance).GetEnumerator();
+            return this._internalItems.Select(x => x.Instance).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -132,7 +157,7 @@ namespace Blazor.IndexedDB
         // ToDo: replace change tracker with better alternative 
         internal IEnumerable<IndexedEntity> GetChanged()
         {
-            foreach (var item in this.internalItems)
+            foreach (var item in this._internalItems)
             {
                 item.DetectChanges();
 
@@ -149,14 +174,14 @@ namespace Blazor.IndexedDB
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (array == null)
-                throw new ArgumentNullException("array");
+                throw new ArgumentNullException(nameof(array));
             if (arrayIndex < 0)
-                throw new ArgumentOutOfRangeException("arrayIndex");
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex));
             if (array.Length - arrayIndex < Count)
                 throw new ArgumentException("Not enough elements after arrayIndex in the destination array.");
 
             for (int i = 0; i < Count; ++i)
-                array[i + arrayIndex] = this.internalItems[i].Instance;
+                array[i + arrayIndex] = this._internalItems[i].Instance;
         }
     }
 }

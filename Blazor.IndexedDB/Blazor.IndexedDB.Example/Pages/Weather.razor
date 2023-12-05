@@ -10,6 +10,9 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
+<button class="btn btn-primary" @onclick="FetchData">Fetch Data</button>
+<button class="btn btn-primary" @onclick="RemoveAll">Remove All</button>
+
 @if (_forecasts == null)
 {
     <p><em>Loading...</em></p>
@@ -44,22 +47,31 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        using var db = await DbFactory.Create<ExampleDb>();
-        var localForecasts = db.WeatherForecasts.ToArray();
-        if (localForecasts.Length == 0)
-        {
-            var remoteForecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-            if (remoteForecasts != null)
-            {
-                db.WeatherForecasts.AddRange(remoteForecasts);
-                await db.SaveChanges();
-            }
+        await Task.Delay(500);
 
-            _forecasts = db.WeatherForecasts.ToArray();
-        }
-        else
+        using var db = await DbFactory.Create<ExampleDb>();
+        _forecasts = db.WeatherForecasts.ToArray();
+    }
+
+    private async Task FetchData()
+    {
+        using var db = await DbFactory.Create<ExampleDb>();
+        var remoteForecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        if (remoteForecasts != null)
         {
-            _forecasts = localForecasts;
+            db.WeatherForecasts.AddRange(remoteForecasts);
+            await db.SaveChanges();
         }
+
+        _forecasts = db.WeatherForecasts.ToArray();
+    }
+
+    private async Task RemoveAll()
+    {
+        using var db = await DbFactory.Create<ExampleDb>();
+        db.WeatherForecasts.RemoveRange(db.WeatherForecasts.ToArray());
+        await db.SaveChanges();
+
+        _forecasts = Array.Empty<WeatherForecast>();
     }
 }
