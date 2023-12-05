@@ -10,7 +10,7 @@
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<IsPackable>true</IsPackable>
-		<Version>3.0.1</Version>
+		<Version>3.0.2</Version>
 		<Authors>brianly1003</Authors>
 		<Description>A Blazor library for accessing IndexedDB</Description>
 		<RepositoryUrl>https://github.com/brianly1003/Blazor.IndexedDB.git</RepositoryUrl>
@@ -21,8 +21,8 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageId>Blazor.IndexedDB</PackageId>
 		<PackageReleaseNotes>
-			- 3.0.1:
-			- Implement db.AddRange() function
+			- 3.0.2:
+			- Impelement RemoveRange() function
 		</PackageReleaseNotes>
 		<PackageProjectUrl>https://github.com/brianly1003/Blazor.IndexedDB</PackageProjectUrl>
 	</PropertyGroup>
