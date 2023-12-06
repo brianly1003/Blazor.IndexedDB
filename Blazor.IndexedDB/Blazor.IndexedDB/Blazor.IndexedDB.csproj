@@ -5,12 +5,14 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<IsPackable>true</IsPackable>
-		<Version>2.0.3</Version>
+		<Version>2.0.4</Version>
 		<Authors>brianly1003</Authors>
 		<Description>A Blazor library for accessing IndexedDB</Description>
 		<RepositoryUrl>https://github.com/brianly1003/Blazor.IndexedDB.git</RepositoryUrl>
@@ -21,21 +23,42 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageId>Blazor.IndexedDB</PackageId>
 		<PackageReleaseNotes>
-			- 2.0.3:
-			- Impelement RemoveRange() function
+			- 2.0.4:
+			- Added .ts files and webpack build for indexedDb.Blazor.js
 		</PackageReleaseNotes>
 		<PackageProjectUrl>https://github.com/brianly1003/Blazor.IndexedDB</PackageProjectUrl>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Remove="package.json" />
+		<Content Remove="tsconfig.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="package.json" />
+		<None Include="tsconfig.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<WebpackInputs Include="**\*.ts" Exclude="node_modules\**; **\*.d.ts" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Remove="Client\" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.JSInterop" Version="7.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<EmbeddedResource Update="wwwroot\indexedDb.Blazor.js">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</EmbeddedResource>
-	</ItemGroup>
+	<Target Name="EnsureNpmRestored" Condition="!Exists('node_modules')">
+		<Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+		<Exec Command="npm install" />
+	</Target>
 
+	<Target Name="RunWebpack" AfterTargets="ResolveReferences" Inputs="@(WebpackInputs)" Outputs="dist\indexedDb.Blazor.js" DependsOnTargets="EnsureNpmRestored">
+		<Exec Command="npm run build:debug" Condition="'$(Configuration)' == 'Debug'" />
+		<Exec Command="npm run build:production" Condition="'$(Configuration)' != 'Debug'" />
+	</Target>
 </Project>

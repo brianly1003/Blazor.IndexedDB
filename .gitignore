@@ -2,3 +2,4 @@
 .vscode
 bin
 obj
+Blazor.IndexedDB/Blazor.IndexedDB/node_modules/
