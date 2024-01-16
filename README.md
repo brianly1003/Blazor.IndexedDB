@@ -1,6 +1,7 @@
 # Blazor.IndexedDB
 
 An easy way to interact with IndexedDB and make it feel like EF Core but `async`.
+NOTE: This lib will be suitable for smaller projects that don't require storing a lot of data in IndexedDB.
 
 ## Version history
 - 2.0.1:
